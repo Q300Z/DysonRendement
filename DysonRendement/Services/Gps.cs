@@ -3,7 +3,7 @@ using Location = Microsoft.Maui.Devices.Sensors.Location;
 
 namespace DysonRendement.Services;
 
-interface IGps
+public interface IGps
 {
     Task<GpsModel> GetCachedLocation();
     Task<GpsModel> GetCurrentLocation();
