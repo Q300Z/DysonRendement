@@ -12,9 +12,15 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
+
         if (!_sensor.ToggleCompass())
         {
             DisplayAlert("Alert", "Compass not supported on device", "OK");
+        }
+
+        if (!_sensor.ToggleOrientation())
+        {
+            DisplayAlert("Alert", "Gyroscope not supported on device", "OK");
         }
     }
 
@@ -27,9 +33,11 @@ public partial class MainPage : ContentPage
             CounterBtn.Text = $"Clicked {count} times";
         var a = await _gps.GetCurrentLocation();
         var b = _sensor.CompassText;
-        Compass.Text = b;
-        Position.Text = a.Text();
-        // await DisplayAlert("Alert", $"{a.Text()} - {b}", "OK");
+        var c = _sensor.OrientationText;
+
+        var viewModel = new Models.ViewModel(b, a, c);
+        BindingContext= viewModel;
+
         SemanticScreenReader.Announce(CounterBtn.Text);
     }
 }

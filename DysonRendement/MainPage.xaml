@@ -2,8 +2,8 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="using:DysonRendement.Models"
              x:Class="DysonRendement.MainPage">
-
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
@@ -35,10 +35,29 @@
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
-            <Label Text="Position GPS :" HorizontalOptions="Center"/>
-            <Label x:Name="Position" Text="-" HorizontalOptions="Center"/>
-            <Label Text="Position du compas :" HorizontalOptions="Center"/>
-            <Label x:Name="Compass" Text="-" HorizontalOptions="Center"/>
+            <VerticalStackLayout x:DataType="models:ViewModel">
+                <Label Text="Position du compas :" HorizontalOptions="Center" />
+                <Label Text="{Binding CompasModel.Angle, StringFormat='Angle : {0}'}"
+                       HorizontalOptions="Center" />
+                <Label Text="{Binding CompasModel.AngleText, StringFormat='Direction : {0}'}"
+                       HorizontalOptions="Center" />
+
+                <Label Text="Position GPS :" HorizontalOptions="Center" />
+                <Label Text="{Binding GpsModel.Latitude, StringFormat='Latitude : {0}'}"
+                       HorizontalOptions="Center" />
+                <Label Text="{Binding GpsModel.Longitude, StringFormat='Longitude : {0}'}"
+                       HorizontalOptions="Center" />
+                <Label Text="{Binding GpsModel.Altitude, StringFormat='Altitude : {0}'}"
+                       HorizontalOptions="Center" />
+
+                <Label Text="Position du orientation :" HorizontalOptions="Center" />
+                <Label Text="{Binding OrientationModel.Pitch, StringFormat='Pitch : {0}'}"
+                       HorizontalOptions="Center" />
+                <Label Text="{Binding OrientationModel.Roll, StringFormat='Roll : {0}'}"
+                       HorizontalOptions="Center" />
+                <Label Text="{Binding OrientationModel.Yaw, StringFormat='Yaw :  : {0}'}"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>

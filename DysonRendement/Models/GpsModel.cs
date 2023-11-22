@@ -1,12 +1,14 @@
-﻿namespace DysonRendement.Models;
+﻿using System.ComponentModel;
 
-public class GpsModel
+namespace DysonRendement.Models;
+
+public class GpsModel : INotifyPropertyChanged
 {
-    private double Latitude { get; set; }
-    private double Longitude { get; set; }
-    private double Altitude { get; set; }
-    private bool Error { get; set; }
-    private string ErrorMessage { get; set; }
+    private double _latitude;
+    private double _longitude;
+    private double _altitude;
+    private bool _error;
+    private string _errorMessage;
 
     public GpsModel(bool error, string errorMessage)
     {
@@ -26,8 +28,58 @@ public class GpsModel
         ErrorMessage = "";
     }
 
-    public String Text()
+    public double Latitude
     {
-        return $"Latitude: {Latitude}, Longitude: {Longitude}, Altitude: {Altitude}";
+        get => _latitude;
+        set
+        {
+            _latitude = value;
+            OnPropertyChanged(nameof(Latitude));
+        }
     }
+
+    public double Longitude
+    {
+        get => _longitude;
+        set
+        {
+            _longitude = value;
+            OnPropertyChanged(nameof(Longitude));
+        }
+    }
+
+    public double Altitude
+    {
+        get => _altitude;
+        set
+        {
+            _altitude = value;
+            OnPropertyChanged(nameof(Altitude));
+        }
+    }
+
+    public bool Error
+    {
+        get => _error;
+        set
+        {
+            _error = value;
+            OnPropertyChanged(nameof(Error));
+        }
+    }
+
+    public string ErrorMessage
+    {
+        get => _errorMessage;
+        set
+        {
+            _errorMessage = value;
+            OnPropertyChanged(nameof(ErrorMessage));
+        }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private void OnPropertyChanged(string name = null) =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }
