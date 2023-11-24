@@ -4,6 +4,13 @@ namespace DysonRendement.Models;
 
 public class ViewModel : INotifyPropertyChanged
 {
+    // Propriétés
+    private CompasModel _compasModel;
+    private GpsModel _gpsModel;
+
+    private OrientationModel _orientationModel;
+
+    // Constructeur
     public ViewModel(CompasModel compasModel, GpsModel gpsModel, OrientationModel orientationModel)
     {
         CompasModel = compasModel;
@@ -11,10 +18,7 @@ public class ViewModel : INotifyPropertyChanged
         OrientationModel = orientationModel;
     }
 
-    private CompasModel _compasModel { get; set; }
-    private GpsModel _gpsModel { get; set; }
-    private OrientationModel _orientationModel { get; set; }
-
+    // Propriétés avec notification de changement de valeur
     public CompasModel CompasModel
     {
         get => _compasModel;
@@ -45,8 +49,10 @@ public class ViewModel : INotifyPropertyChanged
         }
     }
 
+    // Événement pour notifier le changement de propriété à la vue
     public event PropertyChangedEventHandler PropertyChanged;
 
+    // Méthode pour notifier le changement de propriété à la vue
     private void OnPropertyChanged(string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

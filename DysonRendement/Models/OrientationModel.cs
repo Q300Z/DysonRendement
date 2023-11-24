@@ -4,11 +4,12 @@ namespace DysonRendement.Models;
 
 public class OrientationModel : INotifyPropertyChanged
 {
+    // Propriétés
     private double _pitch;
     private double _roll;
     private double _yaw;
 
-
+    // Constructeur
     public OrientationModel(double x, double y, double z, double w)
     {
         Roll = x;
@@ -16,6 +17,7 @@ public class OrientationModel : INotifyPropertyChanged
         Pitch = z;
     }
 
+    // Propriétés avec notification de changement de valeur
     public double Roll
     {
         get => _roll;
@@ -46,8 +48,10 @@ public class OrientationModel : INotifyPropertyChanged
         }
     }
 
+    // Événement pour notifier le changement de propriété à la vue
     public event PropertyChangedEventHandler PropertyChanged;
 
+    // Méthode pour notifier le changement de propriété à la vue
     private void OnPropertyChanged(string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

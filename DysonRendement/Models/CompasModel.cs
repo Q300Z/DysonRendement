@@ -2,16 +2,22 @@
 
 namespace DysonRendement.Models;
 
+// Modèle représentant le compas avec son angle et son point cardinal.
 public class CompasModel : INotifyPropertyChanged
 {
+    // Propriétés
     private double _angle;
+
     private string _angleText;
 
+    // Constructeur
     public CompasModel(double angle)
     {
         Angle = angle;
     }
 
+
+    // Propriétés avec notification de changement de valeur
     public double Angle
     {
         get => _angle;
@@ -33,8 +39,11 @@ public class CompasModel : INotifyPropertyChanged
         }
     }
 
+    // Événement pour notifier le changement de propriété à la vue
     public event PropertyChangedEventHandler PropertyChanged;
 
+
+    // Méthodes pour calculer le point cardinal en fonction de l'angle
     private static string AngleTextCalcul(double angle)
     {
         return angle switch
@@ -50,6 +59,7 @@ public class CompasModel : INotifyPropertyChanged
         };
     }
 
+    // Méthode pour notifier le changement de propriété à la vue
     private void OnPropertyChanged(string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

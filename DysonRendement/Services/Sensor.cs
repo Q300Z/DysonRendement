@@ -3,6 +3,7 @@ using DysonRendement.Models;
 
 namespace DysonRendement.Services;
 
+// Interface pour le service Sensor
 public interface ISensor
 {
     CompasModel CompassText { get; }
@@ -11,15 +12,21 @@ public interface ISensor
     bool ToggleOrientation();
 }
 
+// Service pour les capteurs (compas et orientation) du téléphone qui implémente l'interface ISensor et qui permet de récupérer les valeurs des capteurs.
 public class Sensor : ISensor
 {
+    // Propriétés
     public CompasModel CompassText { get; private set; }
+
     public OrientationModel OrientationText { get; private set; }
 
+    // Méthodes pour activer ou désactiver le compas
     public bool ToggleCompass()
     {
+        // Vérifie si le compas est supporté sur le téléphone
         if (Compass.Default.IsSupported)
         {
+            // Vérifie si le compas est monitoré
             if (!Compass.Default.IsMonitoring)
             {
                 // Turn on compass
@@ -38,10 +45,13 @@ public class Sensor : ISensor
         return false;
     }
 
+    // Méthodes pour activer ou désactiver l'orientation
     public bool ToggleOrientation()
     {
+        // Vérifie si l'orientation est supportée sur le téléphone
         if (OrientationSensor.Default.IsSupported)
         {
+            // Vérifie si l'orientation est monitorée
             if (!OrientationSensor.Default.IsMonitoring)
             {
                 // Turn on orientation
@@ -60,20 +70,23 @@ public class Sensor : ISensor
         return false;
     }
 
+    // Méthodes pour mettre à jour les valeurs du compas
     private void Compass_ReadingChanged(object sender, CompassChangedEventArgs e)
     {
-        // Update UI Label with compass state
+        // Vérifie si le compas est nul
         if (CompassText != null)
             CompassText.Angle = e.Reading.HeadingMagneticNorth;
         else
             CompassText = new CompasModel(e.Reading.HeadingMagneticNorth);
     }
 
+    // Méthodes pour mettre à jour les valeurs de l'orientation
     private void Orientation_ReadingChanged(object sender, OrientationSensorChangedEventArgs e)
     {
-        // Update UI Label with orientation state
+        // Vérifie si l'orientation est nulle
         if (OrientationText != null)
         {
+            // Récupérer les valeurs du quaternion
             var qx = e.Reading.Orientation.X;
             var qy = e.Reading.Orientation.Y;
             var qz = e.Reading.Orientation.Z;
@@ -99,8 +112,15 @@ public class Sensor : ISensor
         }
     }
 
+    // Méthode pour convertir un quaternion en angles d'Euler (yaw, pitch, roll) en degrés
     private static Vector3 QuaternionToEulerAngles(Quaternion quaternion)
     {
+        // Les liens sont chier par CoPilot car bon courage pour comprendre ce qu'il se passe ici :
+        // Documentation : https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+        // StackOverflow : https://stackoverflow.com/questions/11492299/quaternion-to-euler-angles-algorithm-how-to-convert-to-y-up-and-between-ha
+        // StackOverflow : https://stackoverflow.com/questions/596216/formula-to-convert-quaternion-rotation-to-rotation-axis-or-euler-angles
+        // StackOverflow : https://stackoverflow.com/questions/1556260/convert-quaternion-rotation-to-rotation-around-axis
+
         var sinr_cosp = 2 * (quaternion.W * quaternion.X + quaternion.Y * quaternion.Z);
         var cosr_cosp = 1 - 2 * (quaternion.X * quaternion.X + quaternion.Y * quaternion.Y);
         var roll = (float)Math.Atan2(sinr_cosp, cosr_cosp);
@@ -119,8 +139,10 @@ public class Sensor : ISensor
         return new Vector3(roll, pitch, yaw);
     }
 
+    // Classe pour convertir les radians en degrés
     private static class MathHelper
     {
+        // Méthode pour convertir les radians en degrés
         public static float ToDegrees(float radians)
         {
             return radians * (180.0f / (float)Math.PI);

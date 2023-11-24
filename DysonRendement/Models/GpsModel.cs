@@ -2,14 +2,17 @@
 
 namespace DysonRendement.Models;
 
+// Modèle représentant les coordonnées GPS avec la latitude, la longitude et l'altitude.
 public class GpsModel : INotifyPropertyChanged
 {
+    // Propriétés
     private double _altitude;
     private bool _error;
     private string _errorMessage;
     private double _latitude;
     private double _longitude;
 
+    // Constructeurs pour les erreurs
     public GpsModel(bool error, string errorMessage)
     {
         Latitude = 0;
@@ -19,6 +22,7 @@ public class GpsModel : INotifyPropertyChanged
         ErrorMessage = errorMessage;
     }
 
+    // Constructeur pour les coordonnées GPS
     public GpsModel(double latitude, double longitude, double altitude)
     {
         Latitude = latitude;
@@ -28,6 +32,7 @@ public class GpsModel : INotifyPropertyChanged
         ErrorMessage = "";
     }
 
+    // Propriétés avec notification de changement de valeur
     public double Latitude
     {
         get => _latitude;
@@ -78,8 +83,10 @@ public class GpsModel : INotifyPropertyChanged
         }
     }
 
+    // Événement pour notifier le changement de propriété à la vue
     public event PropertyChangedEventHandler PropertyChanged;
 
+    // Méthode pour notifier le changement de propriété à la vue
     private void OnPropertyChanged(string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
