@@ -1,90 +1,55 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
-namespace DysonRendement.Models
+namespace DysonRendement.Models;
+
+public class OrientationModel : INotifyPropertyChanged
 {
-    public class OrientationModel : INotifyPropertyChanged
+    private double _pitch;
+    private double _roll;
+    private double _yaw;
+
+
+    public OrientationModel(double x, double y, double z, double w)
     {
-        public OrientationModel(double roll, double yaw, double pitch)
+        Roll = x;
+        Yaw = y;
+        Pitch = z;
+    }
+
+    public double Roll
+    {
+        get => _roll;
+        set
         {
-            Roll = roll;
-            Yaw = yaw;
-            Pitch = pitch;
+            _roll = value;
+            OnPropertyChanged(nameof(Roll));
         }
-        
-        private double _roll;
-        private double _yaw;
-        private double _pitch;
+    }
 
-        public double Roll
+    public double Yaw
+    {
+        get => _yaw;
+        set
         {
-            get => _roll;
-            set
-            {
-                _roll = value;
-                OnPropertyChanged(nameof(Roll));
-            }
+            _yaw = value;
+            OnPropertyChanged(nameof(Yaw));
         }
+    }
 
-        public double Yaw
+    public double Pitch
+    {
+        get => _pitch;
+        set
         {
-            get => _yaw;
-            set
-            {
-                _yaw = value;
-                OnPropertyChanged(nameof(Yaw));
-            }
+            _pitch = value;
+            OnPropertyChanged(nameof(Pitch));
         }
+    }
 
-        public double Pitch
-        {
-            get => _pitch;
-            set
-            {
-                _pitch = value;
-                OnPropertyChanged(nameof(Pitch));
-            }
-        }
+    public event PropertyChangedEventHandler PropertyChanged;
 
-        public void SetQuaternionValues(double quaternionX, double quaternionY, double quaternionZ)
-        {
-            Roll = ConvertToDegrees(quaternionX, 'x');
-            Yaw = ConvertToDegrees(quaternionY, 'y');
-            Pitch = ConvertToDegrees(quaternionZ, 'z');
-        }
-
-        private double ConvertToDegrees(double quaternion, char axe)
-        {
-            var sinrCosp = 2 * quaternion;
-            var cosrCosp = 1 - 2 * quaternion;
-            var roll = Math.Atan2(sinrCosp, cosrCosp);
-            var sinp = 2 * quaternion;
-            var pitch = Math.Asin(sinp);
-            var sinyCosp = 2 * quaternion;
-            var cosyCosp = 1 - 2 * quaternion;
-            var yaw = Math.Atan2(sinyCosp, cosyCosp);
-
-            // Convertir en degrés
-            roll *= (180.0 / Math.PI);
-            pitch *= (180.0 / Math.PI);
-            yaw *= (180.0 / Math.PI);
-
-            switch (axe)
-            {
-                case 'x':
-                    return roll;
-                case 'y':
-                    return pitch;
-                case 'z':
-                    return yaw;
-                default:
-                    return 0;
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string name = null) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    private void OnPropertyChanged(string name = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

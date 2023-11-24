@@ -4,14 +4,13 @@ namespace DysonRendement.Models;
 
 public class CompasModel : INotifyPropertyChanged
 {
+    private double _angle;
+    private string _angleText;
+
     public CompasModel(double angle)
     {
         Angle = angle;
     }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    private double _angle;
-    private string _angleText;
 
     public double Angle
     {
@@ -24,30 +23,6 @@ public class CompasModel : INotifyPropertyChanged
         }
     }
 
-    private static string AngleTextCalcul(double valeur)
-    {
-        const double nordmin = 15;
-        const double nordmax = 345;
-        const double estmin = 75;
-        const double estmax = 105;
-        const double sudmin = 165;
-        const double sudmax = 190;
-        const double ouestmin = 260;
-        const double ouestmax = 280;
-
-        return valeur switch
-        {
-            > nordmin and < estmin => "Nord-Est",
-            > estmin and < estmax => "Est",
-            > estmax and < sudmin => "Sud-Est",
-            > sudmin and < sudmax => "Sud",
-            > sudmax and < ouestmin => "Sud-Ouest",
-            > ouestmin and < ouestmax => "Nord-Ouest",
-            > ouestmax and < nordmax => "Nord",
-            _ => "Inconnu"
-        };
-    }
-
     public string AngleText
     {
         get => _angleText;
@@ -58,6 +33,25 @@ public class CompasModel : INotifyPropertyChanged
         }
     }
 
-    private void OnPropertyChanged(string name = null) =>
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private static string AngleTextCalcul(double angle)
+    {
+        return angle switch
+        {
+            (>= 0 and < 22.5) or (>= 337.5 and <= 360) => "Nord", // Nord
+            >= 22.5 and < 67.5 => "Nord-Est", // Nord-Est
+            >= 67.5 and < 112.5 => "Est", // Est
+            >= 112.5 and < 157.5 => "Sud-Est", // Sud-Est
+            >= 157.5 and < 202.5 => "Sud", // Sud
+            >= 202.5 and < 247.5 => "Sud-Ouest", // Sud-Ouest
+            >= 247.5 and < 292.5 => "Ouest", // Ouest
+            _ => "Nord-Ouest" // Nord-Ouest
+        };
+    }
+
+    private void OnPropertyChanged(string name = null)
+    {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
 }

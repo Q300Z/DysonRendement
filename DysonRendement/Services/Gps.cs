@@ -1,5 +1,4 @@
 ﻿using DysonRendement.Models;
-using Location = Microsoft.Maui.Devices.Sensors.Location;
 
 namespace DysonRendement.Services;
 
@@ -12,6 +11,12 @@ public interface IGps
 
 public class Gps : IGps
 {
+    private CancellationTokenSource _cancelTokenSource;
+    private bool _isCheckingLocation;
+
+    // ReSharper disable once InconsistentNaming
+    private GpsModel _gpsModel { get; set; }
+
     public async Task<GpsModel> GetCachedLocation()
     {
         try
@@ -19,35 +24,82 @@ public class Gps : IGps
             var location = await Geolocation.Default.GetLastKnownLocationAsync();
 
             if (location != null)
-                // return $"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}";
-                return new GpsModel(location.Latitude, location.Longitude, location.Altitude ?? 0);
+                if (_gpsModel != null)
+                {
+                    _gpsModel.Altitude = location.Altitude ?? 0;
+                    _gpsModel.Latitude = location.Latitude;
+                    _gpsModel.Longitude = location.Longitude;
+                }
+                else
+                {
+                    return new GpsModel(location.Latitude, location.Longitude, location.Altitude ?? 0);
+                }
         }
         catch (FeatureNotSupportedException fnsEx)
         {
             // Handle not supported on device exception
-            return new GpsModel(true, fnsEx.Message);
+            if (_gpsModel == null)
+            {
+                _gpsModel = new GpsModel(true, fnsEx.Message);
+            }
+            else
+            {
+                _gpsModel.Error = true;
+                _gpsModel.ErrorMessage = fnsEx.Message;
+            }
         }
         catch (FeatureNotEnabledException fneEx)
         {
             // Handle not enabled on device exception
-            return new GpsModel(true, fneEx.Message);
+            if (_gpsModel == null)
+            {
+                _gpsModel = new GpsModel(true, fneEx.Message);
+            }
+            else
+            {
+                _gpsModel.Error = true;
+                _gpsModel.ErrorMessage = fneEx.Message;
+            }
         }
         catch (PermissionException pEx)
         {
             // Handle permission exception
-            return new GpsModel(true, pEx.Message);
+            if (_gpsModel == null)
+            {
+                _gpsModel = new GpsModel(true, pEx.Message);
+            }
+            else
+            {
+                _gpsModel.Error = true;
+                _gpsModel.ErrorMessage = pEx.Message;
+            }
         }
         catch (Exception ex)
         {
             // Unable to get location
-            return new GpsModel(true, ex.Message);
+            if (_gpsModel == null)
+            {
+                _gpsModel = new GpsModel(true, ex.Message);
+            }
+            else
+            {
+                _gpsModel.Error = true;
+                _gpsModel.ErrorMessage = ex.Message;
+            }
         }
 
-        return new GpsModel(false, "");
-    }
+        if (_gpsModel == null)
+        {
+            _gpsModel = new GpsModel(false, "");
+        }
+        else
+        {
+            _gpsModel.Error = false;
+            _gpsModel.ErrorMessage = "";
+        }
 
-    private CancellationTokenSource _cancelTokenSource;
-    private bool _isCheckingLocation;
+        return _gpsModel;
+    }
 
     public async Task<GpsModel> GetCurrentLocation()
     {
@@ -59,10 +111,19 @@ public class Gps : IGps
 
             _cancelTokenSource = new CancellationTokenSource();
 
-            Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
+            var location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
 
             if (location != null)
-                return new GpsModel(location.Latitude, location.Longitude, location.Altitude ?? 0);
+                if (_gpsModel != null)
+                {
+                    _gpsModel.Altitude = location.Altitude ?? 0;
+                    _gpsModel.Latitude = location.Latitude;
+                    _gpsModel.Longitude = location.Longitude;
+                }
+                else
+                {
+                    return new GpsModel(location.Latitude, location.Longitude, location.Altitude ?? 0);
+                }
         }
         // Catch one of the following exceptions:
         //   FeatureNotSupportedException
@@ -70,15 +131,22 @@ public class Gps : IGps
         //   PermissionException
         catch (Exception ex)
         {
-            // Unable to get location
-            return new GpsModel(true, ex.Message);
+            if (_gpsModel == null)
+            {
+                _gpsModel = new GpsModel(true, ex.Message);
+            }
+            else
+            {
+                _gpsModel.Error = true;
+                _gpsModel.ErrorMessage = ex.Message;
+            }
         }
         finally
         {
             _isCheckingLocation = false;
         }
 
-        return new GpsModel(false, "");
+        return _gpsModel;
     }
 
     public void CancelRequest()

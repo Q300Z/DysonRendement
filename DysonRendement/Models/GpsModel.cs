@@ -4,11 +4,11 @@ namespace DysonRendement.Models;
 
 public class GpsModel : INotifyPropertyChanged
 {
-    private double _latitude;
-    private double _longitude;
     private double _altitude;
     private bool _error;
     private string _errorMessage;
+    private double _latitude;
+    private double _longitude;
 
     public GpsModel(bool error, string errorMessage)
     {
@@ -80,6 +80,8 @@ public class GpsModel : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler PropertyChanged;
 
-    private void OnPropertyChanged(string name = null) =>
+    private void OnPropertyChanged(string name = null)
+    {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
 }
