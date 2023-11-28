@@ -16,9 +16,9 @@ public interface ISensor
 public class Sensor : ISensor
 {
     // Propriétés
-    public CompasModel CompassText { get; private set; }
+    public CompasModel CompassText { get; private set; } = new CompasModel(0);
 
-    public OrientationModel OrientationText { get; private set; }
+    public OrientationModel OrientationText { get; private set; } = new OrientationModel(0, 0, 0, 0);
 
     // Méthodes pour activer ou désactiver le compas
     public bool ToggleCompass()

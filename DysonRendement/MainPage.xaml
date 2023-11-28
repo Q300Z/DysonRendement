@@ -9,78 +9,79 @@
 
     <!-- Utilisation d'une ScrollView pour permettre le défilement du contenu -->
     <ScrollView>
-        
-        <!-- Mise en page verticale du contenu -->
+
+        <!-- StackLayout vertical contenant des Labels liés à des modèles ViewModel -->
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
-            VerticalOptions="Center">
-
-
-            <!-- Label de bienvenue avec une description -->
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <!-- Bouton avec un événement de clic associé -->
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-            <!-- StackLayout vertical contenant des Labels liés à des modèles ViewModel -->
-            <VerticalStackLayout x:DataType="models:ViewModel">
-
-                <!-- Labels pour la position du compas -->
-                <Label Text="Position du compas :" HorizontalOptions="Center" />
-                <Label Text="{Binding CompasModel.Angle, StringFormat='Angle : {0}'}"
-                       HorizontalOptions="Center" />
-                <Label Text="{Binding CompasModel.AngleText, StringFormat='Direction : {0}'}"
-                       HorizontalOptions="Center" />
-
-                <!-- Labels pour la position GPS -->
-                <Label Text="Position GPS :" HorizontalOptions="Center" />
-                <Label Text="{Binding GpsModel.Latitude, StringFormat='Latitude : {0}'}"
-                       HorizontalOptions="Center" />
-                <Label Text="{Binding GpsModel.Longitude, StringFormat='Longitude : {0}'}"
-                       HorizontalOptions="Center" />
-                <Label Text="{Binding GpsModel.Altitude, StringFormat='Altitude : {0}'}"
-                       HorizontalOptions="Center" />
-
-                <!-- Labels pour la position de l'orientation -->
-                <Label Text="Position du orientation :" HorizontalOptions="Center" />
-                <Label Text="{Binding OrientationModel.Pitch, StringFormat='Pitch : {0}'}"
-                       HorizontalOptions="Center" />
-                <Label Text="{Binding OrientationModel.Roll, StringFormat='Roll : {0}'}"
-                       HorizontalOptions="Center" />
-                <Label Text="{Binding OrientationModel.Yaw, StringFormat='Yaw :  : {0}'}"
-                       HorizontalOptions="Center" />
-            </VerticalStackLayout>
-            <Grid x:Name="CoorDonnees">
+            VerticalOptions="Center"
+            x:DataType="models:ViewModel">
+            <!-- <VerticalStackLayout> -->
+            <!-- -->
+            <!--     ~1~ Labels pour la position du compas @1@ -->
+            <!--     <Label Text="Position du compas :" HorizontalOptions="Center" /> -->
+            <!--     <Label Text="{Binding CompasModel.Angle, StringFormat='Angle : {0}'}" -->
+            <!--            HorizontalOptions="Center" /> -->
+            <!--     <Label Text="{Binding CompasModel.AngleText, StringFormat='Direction : {0}'}" -->
+            <!--            HorizontalOptions="Center" /> -->
+            <!-- -->
+            <!--     ~1~ Labels pour la position GPS @1@ -->
+            <!--     <Label Text="Position GPS :" HorizontalOptions="Center" /> -->
+            <!--     <Label Text="{Binding GpsModel.Latitude, StringFormat='Latitude : {0}'}" -->
+            <!--            HorizontalOptions="Center" /> -->
+            <!--     <Label Text="{Binding GpsModel.Longitude, StringFormat='Longitude : {0}'}" -->
+            <!--            HorizontalOptions="Center" /> -->
+            <!--     <Label Text="{Binding GpsModel.Altitude, StringFormat='Altitude : {0}'}" -->
+            <!--            HorizontalOptions="Center" /> -->
+            <!-- -->
+            <!--     ~1~ Labels pour la position de l'orientation @1@ -->
+            <!--     <Label Text="Position du orientation :" HorizontalOptions="Center" /> -->
+            <!--     <Label Text="{Binding OrientationModel.Pitch, StringFormat='Pitch : {0}'}" -->
+            <!--            HorizontalOptions="Center" /> -->
+            <!--     <Label Text="{Binding OrientationModel.Roll, StringFormat='Roll : {0}'}" -->
+            <!--            HorizontalOptions="Center" /> -->
+            <!--     <Label Text="{Binding OrientationModel.Yaw, StringFormat='Yaw :  : {0}'}" -->
+            <!--            HorizontalOptions="Center" /> -->
+            <!-- -->
+            <!-- -->
+            <!-- </VerticalStackLayout> -->
+            <Label Text="{Binding CompasModel.Angle, StringFormat='{0:0.0}°'}" FontSize="105" HorizontalTextAlignment="Center" VerticalOptions="Start" Padding="0,0,0,150" />
+            <Grid x:Name="CoorDonnees" VerticalOptions="End">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
+                <!-- Colonne du sensor Gps  -->
                 <Image
-                    
-                    Source="rose_des_vents.png" Grid.Column="0" Grid.Row="1"
-                    Rotation="{Binding CompasModel.Angle}"
-                    
-                    />
+                    Source="geolocalisation_logo.svg" Grid.Column="0" Grid.Row="0" HeightRequest="75" />
+                <Label HorizontalOptions="Center" Grid.Column="0" Grid.Row="1" Text="{Binding GpsModel.Longitude, StringFormat='Longitude: {0:0.00}°'}" />
+                <Label HorizontalOptions="Center" Grid.Column="0" Grid.Row="2" Text="{Binding GpsModel.Latitude, StringFormat='Latitude: {0:0.00}°'}" />
+                <Label HorizontalOptions="Center" Grid.Column="0" Grid.Row="3" Text="{Binding GpsModel.Altitude, StringFormat='Altitude: {0:0.00}°'}" />
+
+                <!-- Colonne du sensor Compass  -->
+                <Image
+                    Source="rose_des_vents.png" Grid.Column="1" Grid.Row="0" HeightRequest="115"
+                    Rotation="{Binding CompasModel.Angle}" />
+                <Label Text="{Binding CompasModel.Angle, StringFormat='Angle: {0:0.0}°'}"
+                       HorizontalOptions="Center" Grid.Column="1" Grid.Row="1" />
+                <Label Text="{Binding CompasModel.AngleText, StringFormat='{0}'}"
+                       HorizontalOptions="Center" Grid.Column="1" Grid.Row="2" />
+
+                <!-- Colonne du sensor Orientation  -->
+                <Image
+                    Source="orientation_logo.svg" Grid.Column="2" Grid.Row="0" HeightRequest="75" />
+                <Label HorizontalOptions="Center" Grid.Column="2" Grid.Row="1" Text="{Binding OrientationModel.Pitch, StringFormat='Pitch: {0:0.00}°'}" />
+                <Label HorizontalOptions="Center" Grid.Column="2" Grid.Row="2" Text="{Binding OrientationModel.Roll, StringFormat='Roll: {0:0.00}°'}" />
+                <Label HorizontalOptions="Center" Grid.Column="2" Grid.Row="3" Text="{Binding OrientationModel.Pitch, StringFormat='Pitch: {0:0.00}°'}" />
+
             </Grid>
         </VerticalStackLayout>
-        
     </ScrollView>
-    </Grid>
-
 </ContentPage>
