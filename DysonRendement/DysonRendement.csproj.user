@@ -6,8 +6,8 @@
   <PropertyGroup>
     <ActiveDebugProfile>Xiaomi M2103K19G (Android 12.0 - API 31)</ActiveDebugProfile>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
-    <ActiveDebugFramework>net7.0-android33.0</ActiveDebugFramework>
-    <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
-    <DefaultDevice>pixel_5_-_api_32</DefaultDevice>
+    <ActiveDebugFramework>net7.0-android</ActiveDebugFramework>
+    <ActiveDebugProfile>Xiaomi M2103K19G (Android 12.0 - API 31)</ActiveDebugProfile>
+    <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
   </PropertyGroup>
 </Project>
