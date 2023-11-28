@@ -75,7 +75,7 @@ public class Sensor : ISensor
     {
         // Vérifie si le compas est nul
         if (CompassText != null)
-            CompassText.Angle = e.Reading.HeadingMagneticNorth;
+            CompassText.Angle = Convert.ToDouble(String.Format("{0:0.00}", e.Reading.HeadingMagneticNorth));
         else
             CompassText = new CompasModel(e.Reading.HeadingMagneticNorth);
     }

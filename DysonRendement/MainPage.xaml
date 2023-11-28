@@ -9,26 +9,13 @@
 
     <!-- Utilisation d'une ScrollView pour permettre le défilement du contenu -->
     <ScrollView>
-
+        
         <!-- Mise en page verticale du contenu -->
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
 
-            <!-- Image avec un bot .NET -->
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <!-- Label de salutation -->
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
 
             <!-- Label de bienvenue avec une description -->
             <Label
@@ -74,8 +61,25 @@
                 <Label Text="{Binding OrientationModel.Yaw, StringFormat='Yaw :  : {0}'}"
                        HorizontalOptions="Center" />
             </VerticalStackLayout>
-
+            <Grid x:Name="CoorDonnees">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Image
+                    
+                    Source="rose_des_vents.png" Grid.Column="0" Grid.Row="1"
+                    Rotation="{Binding CompasModel.Angle}"
+                    
+                    />
+            </Grid>
         </VerticalStackLayout>
+        
     </ScrollView>
 
 </ContentPage>
