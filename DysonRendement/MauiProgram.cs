@@ -17,7 +17,7 @@ public static class MauiProgram
             });
         builder.Services.AddSingleton<ISensor, Sensor>();
         builder.Services.AddSingleton<IGps, Gps>();
-        
+
 
 #if DEBUG
         builder.Logging.AddDebug();

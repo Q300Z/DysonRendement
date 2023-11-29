@@ -17,9 +17,6 @@ public partial class MainPage : ContentPage
 
     private readonly ViewModel _viewModel = new(_compasModel, _gpsModel, _orientationModel);
 
-    // Propriétés
-    private int count;
-
     public MainPage()
     {
         InitializeComponent();
@@ -54,5 +51,10 @@ public partial class MainPage : ContentPage
         if (gps == null) return;
         _gpsModel = gps;
         _viewModel.GpsModel = _gpsModel;
+    }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
 }
