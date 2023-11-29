@@ -16,9 +16,9 @@ public interface ISensor
 public class Sensor : ISensor
 {
     // Propriétés
-    public CompasModel CompassText { get; private set; }
+    public CompasModel CompassText { get; private set; } = new(0);
 
-    public OrientationModel OrientationText { get; private set; }
+    public OrientationModel OrientationText { get; private set; } = new(0, 0, 0, 0);
 
     // Méthodes pour activer ou désactiver le compas
     public bool ToggleCompass()
@@ -75,7 +75,7 @@ public class Sensor : ISensor
     {
         // Vérifie si le compas est nul
         if (CompassText != null)
-            CompassText.Angle = e.Reading.HeadingMagneticNorth;
+            CompassText.Angle = Convert.ToDouble(string.Format("{0:0.00}", e.Reading.HeadingMagneticNorth));
         else
             CompassText = new CompasModel(e.Reading.HeadingMagneticNorth);
     }
