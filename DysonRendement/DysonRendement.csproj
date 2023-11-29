@@ -36,6 +36,7 @@
         <MauiIcon Include="Resources\AppIcon\void_icon.png" ForegroundFile="Resources\AppIcon\soleil_icon.png" ForegroundScale="0.65"/>
         <!-- Splash Screen -->
         <MauiSplashScreen Include="Resources\Splash\soleil_splash.svg" BaseSize="1200,1200"/>
+
         <!-- Images -->
         <MauiImage Include="Resources\Images\*"/>
         <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208"/>
@@ -48,7 +49,46 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0"/>
+
+        <None Remove="Resources\Raw\musique_fond1.mp3"/>
+        <None Remove="Resources\Raw\musique_fond2.mp3"/>
+        <None Remove="Resources\Raw\musique_fond3.mp3"/>
+        <None Remove="Resources\Raw\ping.mp3"/>
+        <None Remove="Resources\Raw\son_bouton.mp3"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0"/>
+        <PackageReference Include="Plugin.Maui.Audio" Version="2.1.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Parametre.xaml.cs">
+            <DependentUpon>Parametre.xaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <MauiAsset Update="Resources\Raw\musique_fond1.mp3">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </MauiAsset>
+        <MauiAsset Update="Resources\Raw\musique_fond2.mp3">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </MauiAsset>
+        <MauiAsset Update="Resources\Raw\musique_fond3.mp3">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </MauiAsset>
+        <MauiAsset Update="Resources\Raw\ping.mp3">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </MauiAsset>
+        <MauiAsset Update="Resources\Raw\son_bouton.mp3">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </MauiAsset>
+    </ItemGroup>
+
+    <ItemGroup>
+        <MauiXaml Update="Parametre.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+    </ItemGroup>
 </Project>
