@@ -6,9 +6,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="using:DysonRendement.Models"
              x:Class="DysonRendement.MainPage">
-
-    <!-- Utilisation d'une ScrollView pour permettre le défilement du contenu -->
-    <ScrollView>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Button Text="⚙" HorizontalOptions="End" VerticalOptions="Start" Clicked="Button_Clicked" />
+        <!-- Utilisation d'une ScrollView pour permettre le défilement du contenu -->
+    <ScrollView Grid.Row="1">
 
         <!-- Mise en page verticale du contenu -->
         <VerticalStackLayout
@@ -77,5 +82,5 @@
 
         </VerticalStackLayout>
     </ScrollView>
-
+    </Grid>
 </ContentPage>

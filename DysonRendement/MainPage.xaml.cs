@@ -1,5 +1,6 @@
 ﻿using DysonRendement.Models;
 using DysonRendement.Services;
+using Plugin.Maui.Audio;
 
 namespace DysonRendement;
 
@@ -17,6 +18,9 @@ public partial class MainPage : ContentPage
 
     private readonly ViewModel _viewModel = new(_compasModel, _gpsModel, _orientationModel);
 
+
+    private IAudioPlayer _audioPlayer { get; set; }
+
     // Propriétés
     private int count;
 
@@ -27,6 +31,8 @@ public partial class MainPage : ContentPage
         if (!_sensor.ToggleCompass()) DisplayAlert("Alert", "Compass not supported on device", "OK");
         // Vérifie si le compas est supporté sur le téléphone et affiche une alerte si ce n'est pas le cas sinon démarre le compas
         if (!_sensor.ToggleOrientation()) DisplayAlert("Alert", "Gyroscope not supported on device", "OK");
+
+        LanceMusique();
         // Définit le BindingContext de la page sur le ViewModel
         BindingContext = _viewModel;
     }
@@ -60,5 +66,17 @@ public partial class MainPage : ContentPage
         _viewModel.OrientationModel = _orientationModel;
 
         SemanticScreenReader.Announce(CounterBtn.Text);
+    }
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Parametre(_audioPlayer));
+    }
+
+    private async void LanceMusique()
+    {
+        _audioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("musique_fond2.mp3"));
+        _audioPlayer.Volume = 1;
+        _audioPlayer.Loop = true;
+        _audioPlayer.Play();
     }
 }
