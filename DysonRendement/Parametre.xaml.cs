@@ -11,17 +11,25 @@ public partial class Parametre : ContentPage
     public Parametre(IAudioPlayer _audioPlayer)
 	{
 		InitializeComponent();
-        choixMusique = new string[] { "Musique1", "Musique2" };
+        choixMusique = new string[] { "Can't Sleep - WaterFlame", "Tsuki sayu Yoru - Fu rin Ka zan", "Ambiance Espace - Papy Nounn" };
         audioPlayer = _audioPlayer;
-        
+        if (!audioPlayer.IsPlaying)
+        {
+            MuteMusique.Text = "Activer la musique";
+        }
+        else
+        {
+            MuteMusique.Text = "Couper la musique";
+        }
         BindingContext = this;
-        ChoixMusiqueFond.SelectedIndex = 1;
+        ChoixMusiqueFond.SelectedIndex = 3;
 
 
     }
 
     private async void ChoixMusiqueFond_SelectedIndexChanged(object sender, EventArgs e)
     {
+        SonBouton();
         if (!arriver)
         {
             
@@ -42,8 +50,11 @@ public partial class Parametre : ContentPage
                 case 1:
                     res = "musique_fond2.mp3";
                     break;
+                case 2:
+                    res = "musique_fond3.mp3";
+                    break;
                 default:
-                    res = "musique_fond1.mp3";
+                    res = "musique_fond3.mp3";
                     break;
             }
             Debug.WriteLine(res);
@@ -77,5 +88,10 @@ public partial class Parametre : ContentPage
         audioPlayerBouton.Volume = 1;
         audioPlayerBouton.Loop = false;
         audioPlayerBouton.Play();
+    }
+
+    private void ContentPage_Disappearing(object sender, EventArgs e)
+    {
+        SonBouton();
     }
 }

@@ -50,6 +50,7 @@
     <ItemGroup>
       <None Remove="Resources\Raw\musique_fond1.mp3" />
       <None Remove="Resources\Raw\musique_fond2.mp3" />
+      <None Remove="Resources\Raw\musique_fond3.mp3" />
       <None Remove="Resources\Raw\ping.mp3" />
       <None Remove="Resources\Raw\son_bouton.mp3" />
     </ItemGroup>
@@ -70,6 +71,9 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </MauiAsset>
       <MauiAsset Update="Resources\Raw\musique_fond2.mp3">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </MauiAsset>
+      <MauiAsset Update="Resources\Raw\musique_fond3.mp3">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </MauiAsset>
       <MauiAsset Update="Resources\Raw\ping.mp3">

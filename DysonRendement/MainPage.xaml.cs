@@ -71,7 +71,7 @@ public partial class MainPage : ContentPage
     private async void LanceMusique()
     {
         await Task.Delay(700);
-        _audioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("musique_fond2.mp3"));
+        _audioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("musique_fond3.mp3"));
         _audioPlayer.Volume = 1;
         _audioPlayer.Loop = true;
         _audioPlayer.Play();

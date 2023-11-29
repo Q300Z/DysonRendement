@@ -8,7 +8,7 @@
     Shell.FlyoutBehavior="Disabled">
 
     <ShellContent
-        Title="Home"
+        Title="Dyson Rendement"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
