@@ -21,9 +21,6 @@ public partial class MainPage : ContentPage
 
     private IAudioPlayer _audioPlayer { get; set; }
 
-    // Propriétés
-    private int count;
-
     public MainPage()
     {
         InitializeComponent();
@@ -37,31 +34,38 @@ public partial class MainPage : ContentPage
         BindingContext = _viewModel;
     }
 
-    private async void OnCounterClicked(object sender, EventArgs e)
+    protected override async void OnAppearing()
     {
+        base.OnAppearing();
+        
         SonBouton();
         await Task.Delay(700);
-        // Récupère la position GPS
-        var gps = await _gps.GetCurrentLocation();
-        // Vérifie si la position GPS est nulle
-        if (gps != null)
-            // Met à jour le modèle avec les coordonnées GPS
-            _gpsModel = gps;
-        // Vérifie si le modèle du compas est null
+        
+        // Récupère les données du compas et les affiches dans les labels
         if (_compasModel != null)
-            // Met à jour le modèle avec l'angle du compas
+        {
             _compasModel = _sensor.CompassText;
-        // Vérifie si le modèle de l'orientation est null
+            _viewModel.CompasModel = _compasModel;
+        }
+
+        // Récupère les données du gyroscope et les affiches dans les labels
         if (_orientationModel != null)
-            // Met à jour le modèle avec les coordonnées de l'orientation
+        {
             _orientationModel = _sensor.OrientationText;
+            _viewModel.OrientationModel = _orientationModel;
+        }
 
-        // Met à jour le ViewModel avec les modèles de données des capteurs
+        // Récupère les données du GPS et les affiches dans les labels
+        var gps = await _gps.GetCurrentLocation();
+
+        if (gps == null) return;
+        _gpsModel = gps;
         _viewModel.GpsModel = _gpsModel;
-        _viewModel.CompasModel = _compasModel;
-        _viewModel.OrientationModel = _orientationModel;
+    }
 
-        SemanticScreenReader.Announce(CounterBtn.Text);
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
     private void Button_Clicked(object sender, EventArgs e)
     {
