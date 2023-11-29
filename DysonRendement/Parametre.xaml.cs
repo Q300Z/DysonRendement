@@ -1,45 +1,36 @@
-using Plugin.Maui.Audio;
 using System.Diagnostics;
+using Plugin.Maui.Audio;
 
 namespace DysonRendement;
 
 public partial class Parametre : ContentPage
 {
-    public string[] choixMusique { get; set; }
-    private IAudioPlayer audioPlayer;
     private bool arriver = true;
+    private IAudioPlayer audioPlayer;
+
     public Parametre(IAudioPlayer _audioPlayer)
-	{
-		InitializeComponent();
-        choixMusique = new string[] { "Can't Sleep - WaterFlame", "Tsuki sayu Yoru - Fu rin Ka zan", "Ambiance Espace - Papy Nounn" };
+    {
+        InitializeComponent();
+        choixMusique = new[] { "Can't Sleep - WaterFlame", "Tsuki sayu Yoru - Fu rin Ka zan", "Ambiance Espace - Papy Nounn" };
         audioPlayer = _audioPlayer;
         if (!audioPlayer.IsPlaying)
-        {
             MuteMusique.Text = "Activer la musique";
-        }
         else
-        {
             MuteMusique.Text = "Couper la musique";
-        }
         BindingContext = this;
         ChoixMusiqueFond.SelectedIndex = 3;
-
-
     }
+
+    public string[] choixMusique { get; set; }
 
     private async void ChoixMusiqueFond_SelectedIndexChanged(object sender, EventArgs e)
     {
         SonBouton();
         if (!arriver)
         {
-            
             if (audioPlayer != null)
-            {
                 if (audioPlayer.IsPlaying)
-                {
                     audioPlayer.Stop();
-                }
-            }
             var choix = ChoixMusiqueFond.SelectedIndex;
             string res;
             switch (choix)
@@ -57,12 +48,14 @@ public partial class Parametre : ContentPage
                     res = "musique_fond3.mp3";
                     break;
             }
+
             Debug.WriteLine(res);
             audioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(res));
             audioPlayer.Volume = 1;
             audioPlayer.Loop = true;
             audioPlayer.Play();
         }
+
         arriver = false;
     }
 
