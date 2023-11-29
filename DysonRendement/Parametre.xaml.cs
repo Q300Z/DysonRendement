@@ -7,44 +7,52 @@ public partial class Parametre : ContentPage
 {
     public string[] choixMusique { get; set; }
     private IAudioPlayer audioPlayer;
+    private bool arriver = true;
     public Parametre(IAudioPlayer _audioPlayer)
 	{
 		InitializeComponent();
         choixMusique = new string[] { "Musique1", "Musique2" };
         audioPlayer = _audioPlayer;
+        
         BindingContext = this;
         ChoixMusiqueFond.SelectedIndex = 1;
+
 
     }
 
     private async void ChoixMusiqueFond_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (audioPlayer != null)
+        if (!arriver)
         {
-            if (audioPlayer.IsPlaying)
+            
+            if (audioPlayer != null)
             {
-                audioPlayer.Stop();
+                if (audioPlayer.IsPlaying)
+                {
+                    audioPlayer.Stop();
+                }
             }
+            var choix = ChoixMusiqueFond.SelectedIndex;
+            string res;
+            switch (choix)
+            {
+                case 0:
+                    res = "musique_fond1.mp3";
+                    break;
+                case 1:
+                    res = "musique_fond2.mp3";
+                    break;
+                default:
+                    res = "musique_fond1.mp3";
+                    break;
+            }
+            Debug.WriteLine(res);
+            audioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(res));
+            audioPlayer.Volume = 1;
+            audioPlayer.Loop = true;
+            audioPlayer.Play();
         }
-        var choix = ChoixMusiqueFond.SelectedIndex;
-        string res;
-        switch (choix)
-        {
-            case 0:
-                res = "musique_fond1.mp3";
-                break;
-            case 1:
-                res = "musique_fond2.mp3";
-                break;
-            default:
-                res = "musique_fond1.mp3";
-                break;
-        }
-        Debug.WriteLine(res);
-        audioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(res));
-        audioPlayer.Volume = 1;
-        audioPlayer.Loop = true;
-        audioPlayer.Play();
+        arriver = false;
     }
 
     private async void MuteMusique_Clicked(object sender, EventArgs e)
