@@ -39,12 +39,8 @@ public partial class MainPage : ContentPage
 
     private async void OnCounterClicked(object sender, EventArgs e)
     {
-        count++;
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
-
+        SonBouton();
+        await Task.Delay(700);
         // Récupère la position GPS
         var gps = await _gps.GetCurrentLocation();
         // Vérifie si la position GPS est nulle
@@ -74,9 +70,18 @@ public partial class MainPage : ContentPage
 
     private async void LanceMusique()
     {
+        await Task.Delay(700);
         _audioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("musique_fond2.mp3"));
         _audioPlayer.Volume = 1;
         _audioPlayer.Loop = true;
         _audioPlayer.Play();
+    }
+
+    private async void SonBouton()
+    {
+        var audioPlayerBouton = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("son_bouton.mp3"));
+        audioPlayerBouton.Volume = 1;
+        audioPlayerBouton.Loop = false;
+        audioPlayerBouton.Play();
     }
 }

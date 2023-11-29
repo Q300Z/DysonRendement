@@ -47,8 +47,10 @@ public partial class Parametre : ContentPage
         audioPlayer.Play();
     }
 
-    private void MuteMusique_Clicked(object sender, EventArgs e)
+    private async void MuteMusique_Clicked(object sender, EventArgs e)
     {
+        SonBouton();
+        await Task.Delay(700);
         if (audioPlayer.IsPlaying)
         {
             MuteMusique.Text = "Activer la musique";
@@ -59,5 +61,13 @@ public partial class Parametre : ContentPage
             MuteMusique.Text = "Couper la musique";
             audioPlayer.Play();
         }
+    }
+
+    private async void SonBouton()
+    {
+        var audioPlayerBouton = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("son_bouton.mp3"));
+        audioPlayerBouton.Volume = 1;
+        audioPlayerBouton.Loop = false;
+        audioPlayerBouton.Play();
     }
 }
