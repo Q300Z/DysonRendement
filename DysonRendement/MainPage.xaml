@@ -46,9 +46,9 @@
             <!-- Colonne du sensor Orientation  -->
             <Image
                 Source="orientation_logo.svg" Grid.Column="2" Grid.Row="0" HeightRequest="75" />
-            <Label HorizontalOptions="Center" Grid.Column="2" Grid.Row="1" Text="{Binding OrientationModel.Pitch, StringFormat='Pitch: {0:0.00}°'}" />
-            <Label HorizontalOptions="Center" Grid.Column="2" Grid.Row="2" Text="{Binding OrientationModel.Roll, StringFormat='Roll: {0:0.00}°'}" />
-            <Label HorizontalOptions="Center" Grid.Column="2" Grid.Row="3" Text="{Binding OrientationModel.Pitch, StringFormat='Pitch: {0:0.00}°'}" />
+            <Label HorizontalOptions="Center" Grid.Column="2" Grid.Row="1" Text="{Binding OrientationModel.Pitch, StringFormat='Tangage: {0:0.00}°'}" />
+            <Label HorizontalOptions="Center" Grid.Column="2" Grid.Row="2" Text="{Binding OrientationModel.Roll, StringFormat='Roulis: {0:0.00}°'}" />
+            <Label HorizontalOptions="Center" Grid.Column="2" Grid.Row="3" Text="{Binding OrientationModel.Yaw, StringFormat='Lacet: {0:0.00}°'}" />
 
         </Grid>
     </VerticalStackLayout>

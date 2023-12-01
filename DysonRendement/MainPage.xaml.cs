@@ -38,9 +38,6 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
 
-        SonBouton();
-        // await Task.Delay(700);
-
         // Récupère les données du compas et les affiches dans les labels
         if (_compasModel != null)
         {
@@ -65,12 +62,13 @@ public partial class MainPage : ContentPage
 
     private void Button_Clicked(object sender, EventArgs e)
     {
+        SonBouton();
+        HapticFeedback.Default.Perform(HapticFeedbackType.Click);
         Navigation.PushAsync(new Parametre(AudioPlayer));
     }
 
     private async void LanceMusique()
     {
-        // await Task.Delay(700);
         AudioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("musique_fond3.mp3"));
         AudioPlayer.Volume = 1;
         AudioPlayer.Loop = true;
