@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using DysonRendement.Models;
+using DysonRendement.Utiles;
 
 namespace DysonRendement.Services;
 
@@ -137,15 +138,5 @@ public class Sensor : ISensor
         var yaw = (float)Math.Atan2(siny_cosp, cosy_cosp);
 
         return new Vector3(roll, pitch, yaw);
-    }
-
-    // Classe pour convertir les radians en degrés
-    private static class MathHelper
-    {
-        // Méthode pour convertir les radians en degrés
-        public static float ToDegrees(float radians)
-        {
-            return radians * (180.0f / (float)Math.PI);
-        }
     }
 }
