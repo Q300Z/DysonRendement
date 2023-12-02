@@ -13,8 +13,8 @@ public partial class MainPage : ContentPage
     private static OrientationModel _orientationModel = new(0, 0, 0, 0);
 
     // Propriétés pour les services
-    private readonly IGps _gps = MauiApplication.Current.Services.GetService<IGps>();
-    private readonly ISensor _sensor = MauiApplication.Current.Services.GetService<ISensor>();
+    private readonly IGps _gps = IPlatformApplication.Current?.Services.GetService<IGps>();
+    private readonly ISensor _sensor = IPlatformApplication.Current?.Services.GetService<ISensor>();
 
     private readonly ViewModel _viewModel = new(_compasModel, _gpsModel, _orientationModel);
 
@@ -27,6 +27,8 @@ public partial class MainPage : ContentPage
         if (!_sensor.ToggleOrientation()) DisplayAlert("Alert", "Gyroscope not supported on device", "OK");
 
         LanceMusique();
+
+
         // Définit le BindingContext de la page sur le ViewModel
         BindingContext = _viewModel;
     }
@@ -37,9 +39,6 @@ public partial class MainPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-
-        SonBouton();
-        // await Task.Delay(700);
 
         // Récupère les données du compas et les affiches dans les labels
         if (_compasModel != null)

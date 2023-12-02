@@ -6,7 +6,8 @@
              Title="Parametre"
              Disappearing="ContentPage_Disappearing">
     <VerticalStackLayout Spacing="25">
-        <Picker x:Name="ChoixMusiqueFond" Title="Choisissez la musique de fond" HorizontalOptions="Center"
+        <Picker x:Name="ChoixMusiqueFond" Title="Choisissez la musique de fond"
+                HorizontalOptions="Center"
                 ItemsSource="{Binding choixMusique}"
                 SelectedIndexChanged="ChoixMusiqueFond_SelectedIndexChanged" WidthRequest="300" />
         <Button x:Name="MuteMusique" Text="Couper la musique" Clicked="MuteMusique_Clicked" />
