@@ -25,10 +25,11 @@ public partial class MainPage : ContentPage
         if (!_sensor.ToggleCompass()) DisplayAlert("Alert", "Compass not supported on device", "OK");
         // Vérifie si le compas est supporté sur le téléphone et affiche une alerte si ce n'est pas le cas sinon démarre le compas
         if (!_sensor.ToggleOrientation()) DisplayAlert("Alert", "Gyroscope not supported on device", "OK");
-
+            
         LanceMusique();
         // Définit le BindingContext de la page sur le ViewModel
         BindingContext = _viewModel;
+
     }
 
 
@@ -38,7 +39,7 @@ public partial class MainPage : ContentPage
     {
         base.OnAppearing();
 
-        SonBouton();
+        
         // await Task.Delay(700);
 
         // Récupère les données du compas et les affiches dans les labels
@@ -70,18 +71,14 @@ public partial class MainPage : ContentPage
 
     private async void LanceMusique()
     {
+        if (AudioPlayer is null)
         // await Task.Delay(700);
-        AudioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("musique_fond3.mp3"));
-        AudioPlayer.Volume = 1;
-        AudioPlayer.Loop = true;
-        AudioPlayer.Play();
+        {
+            AudioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("musique_fond3.mp3"));
+            AudioPlayer.Volume = 1;
+            AudioPlayer.Loop = true;
+            AudioPlayer.Play();
+        }
     }
 
-    private static async void SonBouton()
-    {
-        var audioPlayerBouton = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("son_bouton.mp3"));
-        audioPlayerBouton.Volume = 1;
-        audioPlayerBouton.Loop = false;
-        audioPlayerBouton.Play();
-    }
 }

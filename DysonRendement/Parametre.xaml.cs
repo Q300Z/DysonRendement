@@ -5,8 +5,9 @@ namespace DysonRendement;
 
 public partial class Parametre : ContentPage
 {
-    private bool arriver = true;
+    private bool FirstArriver = true;
     private IAudioPlayer audioPlayer;
+    public string[] choixMusique { get; set; }
 
     public Parametre(IAudioPlayer _audioPlayer)
     {
@@ -18,15 +19,14 @@ public partial class Parametre : ContentPage
         else
             MuteMusique.Text = "Couper la musique";
         BindingContext = this;
-        ChoixMusiqueFond.SelectedIndex = 3;
+        ChoixMusiqueFond.SelectedIndex = 2;
     }
 
-    public string[] choixMusique { get; set; }
-
+    
     private async void ChoixMusiqueFond_SelectedIndexChanged(object sender, EventArgs e)
     {
         SonBouton();
-        if (!arriver)
+        if (!FirstArriver)
         {
             if (audioPlayer != null)
                 if (audioPlayer.IsPlaying)
@@ -54,9 +54,11 @@ public partial class Parametre : ContentPage
             audioPlayer.Volume = 1;
             audioPlayer.Loop = true;
             audioPlayer.Play();
+
+            MuteMusique.Text = "Couper la musique";
         }
 
-        arriver = false;
+        FirstArriver = false;
     }
 
     private async void MuteMusique_Clicked(object sender, EventArgs e)

@@ -14,7 +14,7 @@
         Padding="30,0"
         VerticalOptions="Center"
         x:DataType="models:ViewModel">
-        <Label Text="{Binding CompasModel.Angle, StringFormat='{0:0.0}°'}" FontSize="105" HorizontalTextAlignment="Center" VerticalOptions="Center" Padding="0,0,0,150" />
+        <Label Text="{Binding Perform}" FontSize="105" HorizontalTextAlignment="Center" VerticalOptions="Center" Padding="0,0,0,150" />
         <Grid x:Name="CoorDonnees" VerticalOptions="End">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
