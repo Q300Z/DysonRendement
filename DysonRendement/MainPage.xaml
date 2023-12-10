@@ -14,7 +14,8 @@
         Padding="30,0"
         VerticalOptions="Center"
         x:DataType="models:ViewModel">
-        <Label Text="{Binding CompasModel.Angle, StringFormat='{0:0.0}°'}" FontSize="105" HorizontalTextAlignment="Center" VerticalOptions="Center" Padding="0,0,0,150" />
+        <Label Text="{Binding RendementModel.Rendement, StringFormat='{0:0}%'}" FontSize="105"
+               HorizontalTextAlignment="Center" VerticalOptions="Center" Padding="0,0,0,150" />
         <Grid x:Name="CoorDonnees" VerticalOptions="End">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
@@ -30,9 +31,12 @@
             <!-- Colonne du sensor Gps  -->
             <Image
                 Source="geolocalisation_logo.svg" Grid.Column="0" Grid.Row="0" HeightRequest="75" />
-            <Label HorizontalOptions="Center" Grid.Column="0" Grid.Row="1" Text="{Binding GpsModel.Longitude, StringFormat='Longitude: {0:0.00}°'}" />
-            <Label HorizontalOptions="Center" Grid.Column="0" Grid.Row="2" Text="{Binding GpsModel.Latitude, StringFormat='Latitude: {0:0.00}°'}" />
-            <Label HorizontalOptions="Center" Grid.Column="0" Grid.Row="3" Text="{Binding GpsModel.Altitude, StringFormat='Altitude: {0:0.00}°'}" />
+            <Label HorizontalOptions="Center" Grid.Column="0" Grid.Row="1"
+                   Text="{Binding GpsModel.Longitude, StringFormat='Longitude: {0:0.00}°'}" />
+            <Label HorizontalOptions="Center" Grid.Column="0" Grid.Row="2"
+                   Text="{Binding GpsModel.Latitude, StringFormat='Latitude: {0:0.00}°'}" />
+            <Label HorizontalOptions="Center" Grid.Column="0" Grid.Row="3"
+                   Text="{Binding GpsModel.Altitude, StringFormat='Altitude: {0:0.00}°'}" />
 
             <!-- Colonne du sensor Compass  -->
             <Image

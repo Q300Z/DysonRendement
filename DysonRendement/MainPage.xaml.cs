@@ -1,5 +1,6 @@
 ﻿using DysonRendement.Models;
 using DysonRendement.Services;
+using DysonRendement.Utiles;
 using Plugin.Maui.Audio;
 
 namespace DysonRendement;
@@ -11,12 +12,15 @@ public partial class MainPage : ContentPage
     private static CompasModel _compasModel = new(0);
 
     private static OrientationModel _orientationModel = new(0, 0, 0, 0);
+    private static readonly RendementModel _rendementModel = new(0);
 
     // Propriétés pour les services
-    private readonly IGps _gps = MauiApplication.Current.Services.GetService<IGps>();
-    private readonly ISensor _sensor = MauiApplication.Current.Services.GetService<ISensor>();
+    private readonly IGps _gps = IPlatformApplication.Current?.Services.GetService<IGps>();
+    private readonly ISensor _sensor = IPlatformApplication.Current?.Services.GetService<ISensor>();
 
-    private readonly ViewModel _viewModel = new(_compasModel, _gpsModel, _orientationModel);
+    private readonly Timer _timerUpdateRendement;
+
+    private readonly ViewModel _viewModel = new(_compasModel, _gpsModel, _orientationModel, _rendementModel);
 
     public MainPage()
     {
@@ -27,8 +31,12 @@ public partial class MainPage : ContentPage
         if (!_sensor.ToggleOrientation()) DisplayAlert("Alert", "Gyroscope not supported on device", "OK");
 
         LanceMusique();
+
+
         // Définit le BindingContext de la page sur le ViewModel
         BindingContext = _viewModel;
+
+        _timerUpdateRendement = new Timer(UpdateRendement, null, 0, 1000);
     }
 
 
@@ -58,6 +66,11 @@ public partial class MainPage : ContentPage
         if (gps == null) return;
         _gpsModel = gps;
         _viewModel.GpsModel = _gpsModel;
+    }
+
+    private static void UpdateRendement(object state)
+    {
+        _rendementModel.Rendement = MathHelper.CalculerRendement(_orientationModel.Roll, _compasModel.AngleText);
     }
 
     private void Button_Clicked(object sender, EventArgs e)

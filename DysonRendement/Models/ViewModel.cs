@@ -7,15 +7,16 @@ public class ViewModel : INotifyPropertyChanged
     // Propriétés
     private CompasModel _compasModel;
     private GpsModel _gpsModel;
-
     private OrientationModel _orientationModel;
+    private RendementModel _rendementModel;
 
     // Constructeur
-    public ViewModel(CompasModel compasModel, GpsModel gpsModel, OrientationModel orientationModel)
+    public ViewModel(CompasModel compasModel, GpsModel gpsModel, OrientationModel orientationModel, RendementModel rendementModel)
     {
         CompasModel = compasModel;
         GpsModel = gpsModel;
         OrientationModel = orientationModel;
+        RendementModel = rendementModel;
     }
 
     // Propriétés avec notification de changement de valeur
@@ -46,6 +47,16 @@ public class ViewModel : INotifyPropertyChanged
         {
             _orientationModel = value;
             OnPropertyChanged(nameof(OrientationModel));
+        }
+    }
+
+    public RendementModel RendementModel
+    {
+        get => _rendementModel;
+        set
+        {
+            _rendementModel = value;
+            OnPropertyChanged(nameof(RendementModel));
         }
     }
 

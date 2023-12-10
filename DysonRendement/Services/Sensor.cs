@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using DysonRendement.Models;
+using DysonRendement.Utiles;
 
 namespace DysonRendement.Services;
 
@@ -75,7 +76,7 @@ public class Sensor : ISensor
     {
         // Vérifie si le compas est nul
         if (CompassText != null)
-            CompassText.Angle = Convert.ToDouble(string.Format("{0:0.00}", e.Reading.HeadingMagneticNorth));
+            CompassText.Angle = Convert.ToDouble($"{e.Reading.HeadingMagneticNorth:0.00}");
         else
             CompassText = new CompasModel(e.Reading.HeadingMagneticNorth);
     }
@@ -108,7 +109,8 @@ public class Sensor : ISensor
         }
         else
         {
-            OrientationText = new OrientationModel(e.Reading.Orientation.X, e.Reading.Orientation.Y, e.Reading.Orientation.Z, e.Reading.Orientation.W);
+            OrientationText =
+                new OrientationModel(e.Reading.Orientation.X, e.Reading.Orientation.Y, e.Reading.Orientation.Z, e.Reading.Orientation.W);
         }
     }
 
@@ -137,15 +139,5 @@ public class Sensor : ISensor
         var yaw = (float)Math.Atan2(siny_cosp, cosy_cosp);
 
         return new Vector3(roll, pitch, yaw);
-    }
-
-    // Classe pour convertir les radians en degrés
-    private static class MathHelper
-    {
-        // Méthode pour convertir les radians en degrés
-        public static float ToDegrees(float radians)
-        {
-            return radians * (180.0f / (float)Math.PI);
-        }
     }
 }
