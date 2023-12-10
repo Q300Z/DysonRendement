@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Plugin.Maui.Audio;
 
 namespace DysonRendement;
@@ -26,30 +25,20 @@ public partial class Parametre : ContentPage
     private async void ChoixMusiqueFond_SelectedIndexChanged(object sender, EventArgs e)
     {
         SonBouton();
+        HapticFeedback.Default.Perform(HapticFeedbackType.Click);
         if (!arriver)
         {
             if (audioPlayer != null)
                 if (audioPlayer.IsPlaying)
                     audioPlayer.Stop();
             var choix = ChoixMusiqueFond.SelectedIndex;
-            string res;
-            switch (choix)
+            var res = choix switch
             {
-                case 0:
-                    res = "musique_fond1.mp3";
-                    break;
-                case 1:
-                    res = "musique_fond2.mp3";
-                    break;
-                case 2:
-                    res = "musique_fond3.mp3";
-                    break;
-                default:
-                    res = "musique_fond3.mp3";
-                    break;
-            }
-
-            Debug.WriteLine(res);
+                0 => "musique_fond1.mp3",
+                1 => "musique_fond2.mp3",
+                2 => "musique_fond3.mp3",
+                _ => "musique_fond3.mp3"
+            };
             audioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(res));
             audioPlayer.Volume = 1;
             audioPlayer.Loop = true;
@@ -62,6 +51,7 @@ public partial class Parametre : ContentPage
     private async void MuteMusique_Clicked(object sender, EventArgs e)
     {
         SonBouton();
+        HapticFeedback.Default.Perform(HapticFeedbackType.Click);
         await Task.Delay(700);
         if (audioPlayer.IsPlaying)
         {
@@ -86,5 +76,6 @@ public partial class Parametre : ContentPage
     private void ContentPage_Disappearing(object sender, EventArgs e)
     {
         SonBouton();
+        HapticFeedback.Default.Perform(HapticFeedbackType.Click);
     }
 }
