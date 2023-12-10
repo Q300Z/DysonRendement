@@ -98,8 +98,8 @@ public class Sensor : ISensor
             var eulerRotation = QuaternionToEulerAngles(quaternion);
 
             // Convertir radians en degrés
-            var roll = MathHelper.ToDegrees(eulerRotation.X);
-            var pitch = MathHelper.ToDegrees(eulerRotation.Y);
+            var pitch = MathHelper.ToDegrees(eulerRotation.X);
+            var roll = MathHelper.ToDegrees(eulerRotation.Y);
             var yaw = MathHelper.ToDegrees(eulerRotation.Z);
 
             // Mettre à jour les valeurs dans votre classe OrientationText
