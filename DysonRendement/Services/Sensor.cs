@@ -109,7 +109,8 @@ public class Sensor : ISensor
         }
         else
         {
-            OrientationText = new OrientationModel(e.Reading.Orientation.X, e.Reading.Orientation.Y, e.Reading.Orientation.Z, e.Reading.Orientation.W);
+            OrientationText =
+                new OrientationModel(e.Reading.Orientation.X, e.Reading.Orientation.Y, e.Reading.Orientation.Z, e.Reading.Orientation.W);
         }
     }
 
